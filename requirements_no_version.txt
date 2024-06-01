@@ -1,0 +1,10 @@
+biopython
+ete3
+pandas
+pdb-tools
+pyqt5
+requests
+scikit-learn
+seaborn
+streamlit
+altair
