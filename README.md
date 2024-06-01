@@ -1,4 +1,4 @@
-# VToCs - Streamlit version
+# V-ToCs - Streamlit version
 
 ## Colab link
 
