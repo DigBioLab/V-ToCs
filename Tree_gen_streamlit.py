@@ -592,7 +592,6 @@ def main():
          initial_sidebar_state="expanded",
          menu_items={
              'Get Help': 'https://digital-biotechnology.com/',
-             'Report a bug': "https://github.com/cobri/",
              'About': "https://digital-biotechnology.com/"
          }
     )    
