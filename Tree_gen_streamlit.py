@@ -69,12 +69,12 @@ def generate_tree(
     #intrepro domains to check for in the uniprot files
     inter = ['IPR006586', 'IPR024079', 'IPR009003', 'IPR003571', 'IPR001304', 'IPR002223', 'IPR001211', 'IPR001762', 'IPR003572']
     #toxin families that the domains correspond to
-    map_toxins = ['P-III metalloprotease', '', 'Serine Protease', '', 'C type lectin', 'Kunitz type inhibitor', '', 'Disintegrin', 'Cytotoxin']
+    map_toxins = ['P-III metalloprotease', '', 'Serine Protease', '', 'C-type lectin', 'Kunitz-type inhibitor', '', 'Disintegrin', 'Cytotoxin']
     #classes of toxins used
-    class_set = {'Unclassified', 'Unclassified 3FTx', 'Long neurotoxin', 'Short neurotoxin', 'Cytotoxin',
-                'Kunitz type inhibitor', 'P-I metalloprotease', 'P-II metalloprotease',
+    class_set = {'Unclassified', 'Unclassified 3FTx', 'Long-chain α-neurotoxin', 'Short-chain α-neurotoxin', 'Cytotoxin',
+                'Kunitz-type inhibitor', 'P-I metalloprotease', 'P-II metalloprotease',
                 'P-III metalloprotease', 'Disintegrin', 'PLA2', 'Elapid PLA2', 'Viperid PLA2',
-                'C type lectin', 'Serine Protease'}
+                'C-type lectin', 'Serine Protease'}
     
     #if only 1 family selected fam = the family. If all are selected then famf = all and fam =False:
     if fam_select == class_set:
@@ -175,7 +175,7 @@ def generate_tree(
     os.mkdir(out_folder)
     out_path = os.path.join(out_folder, 'Raw.txt')
     inputtxt_path = os.path.join(out_folder, 'input.txt')
-    with open(inputtxt_path, 'w') as fin:
+    with open(inputtxt_path, 'w', encoding='utf-8') as fin:
         input_str = "".join([
             f"toxin families: fam_select = {fam_select}\n",
             f"organisms: org_file = {org_file}\n",
@@ -224,7 +224,7 @@ def generate_tree(
             else:
                 orgs = org_file.splitlines()
                 orgs = list(set(orgs))
-                with open(out_path, 'w') as fout:
+                with open(out_path, 'w', encoding='utf-8') as fout:
             
                     for txtfile in os.listdir(folder_uniprot):
                         txtfile_path = os.path.join(folder_uniprot, txtfile)
@@ -332,11 +332,11 @@ def generate_tree(
                             else:
                                 match = re.search(r'DE\s{3}(RecName|AltName): Full=Long', content)
                                 if match:
-                                    out = 'Long neurotoxin'
+                                    out = 'Long-chain α-neurotoxin'
                                 else:
                                     match = re.search(r'DE\s{3}(RecName|AltName): Full=Short', content)
                                     if match:
-                                        out = 'Short neurotoxin'
+                                        out = 'Short-chain α-neurotoxin'
                                     else:
                                         out = 'Unclassified 3FTx'
                                         with open("unclas_3ftxs.txt", "a") as unclas_file:
@@ -371,20 +371,16 @@ def generate_tree(
                             elif match_svmp:
                                 out = 'P-II metalloprotease'        # is it P-II though?
                             elif match_ScNTx:
-                                out = 'Short neurotoxin'
+                                out = 'Short-chain α-neurotoxin'
                             elif match_LcNTx:
-                                out = 'Long neurotoxin'
+                                out = 'Long-chain α-neurotoxin'
                             elif match_cyto:
                                 out = 'Cytotoxin'
                             elif match_3ftx:
                                 out = 'Unclassified 3FTx'
-                                with open("unclas_3ftxs.txt", "a") as unclas_file:
-                                    print(file, file=unclas_file)
 
                             else:
                                 out = 'Unclassified'
-                                with open("unclas.txt", "a") as unclas_file:
-                                    print(file, file=unclas_file)
                             classification.append(out)
 
                 if out is None:
@@ -461,10 +457,10 @@ def generate_tree(
                     cmap = json.load(f)
 
             #colors used for tree annotation of families
-            cmap_fam = {'Unclassified 3FTx':'#e3665b', 'Long neurotoxin':'#995e59', 'Short neurotoxin':'#e8c2be',
+            cmap_fam = {'Unclassified 3FTx':'#e3665b', 'Long-chain α-neurotoxin':'#995e59', 'Short-chain α-neurotoxin':'#e8c2be',
                         'Cytotoxin':'#941e12', 'PLA2':'#9c6fad', 'Viperid PLA2':'#58256b', 'Elapid PLA2':'#ddadf0',
                         'P-I metalloprotease':'#c6f0ad', 'P-II metalloprotease':'#76ad55', 'P-III metalloprotease':'#326315',
-                        'C type lectin':'#5f6ed9', 'Kunitz type inhibitor':'#f7a257', 'Disintegrin':'#279c79',
+                        'C-type lectin':'#5f6ed9', 'Kunitz-type inhibitor':'#f7a257', 'Disintegrin':'#279c79',
                         'Serine Protease':'#86e3e3', 'Unclassified':'#cbd0d1'}
             
             #organism legend
@@ -558,7 +554,7 @@ def generate_tree(
                 node.dist = 1
             ts.legend_position = 1
             ts.show_leaf_name = True
-            ts.scale =  80
+            ts.scale = 80
             ts.branch_vertical_margin = 20
             
             #create tree figures
@@ -568,7 +564,7 @@ def generate_tree(
 
             #render_tree(tree_rms, out_folder, ts)
             #raw file with accs and orgs
-            with open(out_path, 'w') as fout:
+            with open(out_path, 'w', encoding='utf-8') as fout:
                 for acc, org, cl in zip(accs, org_origin, classification):
                     print(f'{acc}\t{org}\t{cl}', file=fout)
 
@@ -607,10 +603,10 @@ def main():
             [
                 "Unclassified", 
                 "Unclassified 3FTx", 
-                "Long neurotoxin", 
-                "Short neurotoxin", 
+                "Long-chain α-neurotoxin", 
+                "Short-chain α-neurotoxin", 
                 "Cytotoxin", 
-                "Kunitz type inhibitor", 
+                "Kunitz-type inhibitor", 
                 "P-I metalloprotease", 
                 "P-II metalloprotease", 
                 "P-III metalloprotease", 
@@ -618,7 +614,7 @@ def main():
                 "PLA2", 
                 "Elapid PLA2", 
                 "Viperid PLA2", 
-                "C type lectin", 
+                "C-type lectin", 
                 "Serine Protease"
             ]
         )
