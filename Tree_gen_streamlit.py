@@ -659,7 +659,13 @@ def main():
             else:
                 org_file = 'all'
 
-
+            
+        with col2:
+            #fasta_file = st.file_uploader('Fasta file for fragment check. Upload your own file or leave blank to use the default all toxins fasta file.')
+            #if not fasta_file:
+            #    fasta_file = 'combined.fasta'
+            fasta_file = 'combined.fasta'
+            
             tree_option = st.selectbox(
                   'Select the tree file to work with:',
                   ('Sequence_blosum45','Sequence_blosum62','Sequence_pam250', 'Structure-TM', 'Structure-RMSD')
@@ -672,11 +678,6 @@ def main():
                 'Structure-RMSD': ('RMSD_newick.txt','Dataframe_RMS.csv')
             }
             tree_file, distance_file = tree_and_distance_files.get(tree_option)
-            
-        with col2:
-            fasta_file = st.file_uploader('Fasta file for fragment check. Upload your own file or leave blank to use the default all toxins fasta file.')
-            fasta_file = 'combined.fasta' if fasta_file is None else fasta_file
-            
 
             acc_main = st.text_input('Get homology distance values based on input accession. Must be a uniprot accession  number.')
             acc_main = False if acc_main == '' else acc_main
